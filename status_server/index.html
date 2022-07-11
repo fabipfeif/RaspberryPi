@@ -1,7 +1,8 @@
 <body>
     <h1>System Status</h1>
     <p>
-        Raspberry Pi CPU Temperatur in °C: <strong id="cputemp">0</strong>
+        Raspberry Pi CPU Temperatur in °C: <strong id="cputemp">--.--</strong> <br>
+        letztes Update um: <strong id="time">--.--</strong>
     </p>
 
 
@@ -14,11 +15,12 @@
                 fetch('update.php').then(function (response) {
                     return response.json();
                 }).then(function (data) {
-                    CpuTemp.textContent = (parseInt(data.Cputemp)/1000).toFixed(2);
+                    CpuTemp.textContent = (parseInt(data.Cputemp) / 1000).toFixed(2);
+                    time.textContent = data.time;
                 }).catch(function (error) {
                     console.log(error);
                 });
-            }, 1000);
+            }, 500);
         }
 
         document.addEventListener('DOMContentLoaded', function () {
