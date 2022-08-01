@@ -1,12 +1,14 @@
 <body>
     <h1>System Status</h1>
     <p>
-        Raspberry Pi CPU Temperatur in °C: <strong id="cputemp">--.--</strong> <br>
-        letztes Update um: <strong id="time">--.--</strong>
+        Raspberry Pi CPU Temperatur: <strong id="cputemp">--.--</strong> °C<br>
+        letztes Update um: <strong id="time">--.--</strong> <br>
+        maximale Temperatur seit <strong id="time_start">--.--</strong>: <strong id="maxtemp">--.--</strong> °C
     </p>
 
-
     <script>
+        let max_t = 0
+        let start_time = 0
         function startLiveUpdate() {
             const CpuTemp = document.getElementById('cputemp');
 
@@ -17,6 +19,14 @@
                 }).then(function (data) {
                     CpuTemp.textContent = (parseInt(data.Cputemp) / 1000).toFixed(2);
                     time.textContent = data.time;
+                    if (CpuTemp.textContent > max_t) {
+                        max_t = CpuTemp.textContent
+                    };
+                    maxtemp.textContent = max_t;
+                    if (start_time == 0) {
+                        start_time = time.textContent
+                    };
+                    time_start.textContent = start_time;
                 }).catch(function (error) {
                     console.log(error);
                 });

@@ -11,5 +11,7 @@ $data = [
 	'Cputemp' => $contents,
 	'time' => date("h:i:sa"),
 ];
+
 fclose($fp);
+
 echo json_encode($data);
